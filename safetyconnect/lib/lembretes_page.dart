@@ -1,6 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'package:intl/intl.dart'; // Importe o pacote intl para formatar a data
 
-class LembretesPage extends StatelessWidget {
+class Lembrete {
+  final String titulo;
+  final DateTime dataLembrete;
+
+  Lembrete({
+    required this.titulo,
+    required this.dataLembrete,
+  });
+}
+
+class LembretesPage extends StatefulWidget {
+  @override
+  _LembretesPageState createState() => _LembretesPageState();
+}
+
+class _LembretesPageState extends State<LembretesPage> {
+  late FlutterTts flutterTts;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterTts = FlutterTts();
+  }
+
+  final List<Lembrete> lembretes = [
+    Lembrete(
+      titulo: 'Comprar leite',
+      dataLembrete: DateTime(2024, 2, 20, 8, 0),
+    ),
+    Lembrete(
+      titulo: 'Reunião de equipe',
+      dataLembrete: DateTime(2024, 2, 22, 14, 30),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,9 +49,12 @@ class LembretesPage extends StatelessWidget {
           return Card(
             child: ListTile(
               title: Text(lembretes[index].titulo),
-              subtitle: Text(lembretes[index].descricao),
+              subtitle: Text(DateFormat('dd/MM/yyyy HH:mm')
+                  .format(lembretes[index].dataLembrete)),
               onTap: () {
-                // Implemente a lógica para reproduzir o lembrete em áudio
+                speak(lembretes[index].titulo);
+                speak(DateFormat('dd/MM/yyyy HH:mm')
+                    .format(lembretes[index].dataLembrete));
               },
             ),
           );
@@ -23,27 +62,14 @@ class LembretesPage extends StatelessWidget {
       ),
     );
   }
+
+  void speak(String text) async {
+    await flutterTts.speak(text);
+  }
 }
 
-class Lembrete {
-  final String titulo;
-  final String descricao;
-
-  Lembrete({required this.titulo, required this.descricao});
+void main() {
+  runApp(MaterialApp(
+    home: LembretesPage(),
+  ));
 }
-
-List<Lembrete> lembretes = [
-  Lembrete(
-    titulo: 'Lembrete 1',
-    descricao: 'Descrição do lembrete 1.',
-  ),
-  Lembrete(
-    titulo: 'Lembrete 2',
-    descricao: 'Descrição do lembrete 2.',
-  ),
-  Lembrete(
-    titulo: 'Lembrete 3',
-    descricao: 'Descrição do lembrete 3.',
-  ),
-  // Adicione mais lembretes conforme necessário
-];

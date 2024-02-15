@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'mensagens_page.dart';
 import 'lembretes_page.dart';
-import 'instrucoes_page.dart';
-import 'alertas_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -40,8 +38,9 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => MensagensPage()),
                 );
               },
-              child: Text('Página de Mensagens'),
+              child: Text('Mensagens'),
             ),
+            SizedBox(height: 20), // Adicionando um espaço de 20 pixels
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -49,25 +48,7 @@ class HomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => LembretesPage()),
                 );
               },
-              child: Text('Página de Lembretes'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InstrucoesPage()),
-                );
-              },
-              child: Text('Página de Instruções'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AlertasPage()),
-                );
-              },
-              child: Text('Página de Alertas'),
+              child: Text('Lembretes'),
             ),
           ],
         ),
